@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id:  1
+      author:  franck.mazzolo@gmail.com
+      changes:
+        - createTable:
+            tableName: vehicle
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: current_kilometers
+                  type: int
+        - createTable:
+            tableName:  operation
+            columns:
+              - column:
+                  name:  id
+                  type:  int
+                  autoIncrement:  true
+                  constraints:
+                    primaryKey:  true
+                    nullable:  false
+              - column:
+                  name:  name
+                  type:  varchar(50)
+                  constraints:
+                    nullable:  false
+              - column:
+                  name: periodicity_date
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: periodicity_kilometers
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: vehicle_id
+                  type: int
+        - createTable:
+            tableName: operation_history
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date
+                  type: date
+              - column:
+                  name: operation_id
+                  type: int
+        - addForeignKeyConstraint:
+            baseColumnNames: vehicle_id
+            baseTableName: operation
+            constraintName: fk_operation_vehicle_id
+            referencedColumnNames: id
+            referencedTableName: vehicle
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: operation_id
+            baseTableName: operation_history
+            constraintName: fk_operation_history_operation_id
+            referencedColumnNames: id
+            referencedTableName: operation
+            validate: true
