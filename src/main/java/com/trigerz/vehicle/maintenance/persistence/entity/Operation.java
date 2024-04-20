@@ -8,7 +8,9 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -28,7 +30,7 @@ public class Operation {
 
     @NotNull
     @Column(name = "PERIODICITY_DATE", nullable = false)
-    private Integer periodicityDate;
+    private LocalDate periodicityDate;
 
     @NotNull
     @Column(name = "PERIODICITY_KILOMETERS", nullable = false)

@@ -38,7 +38,7 @@ databaseChangeLog:
                     nullable:  false
               - column:
                   name: periodicity_date
-                  type: int
+                  type: date
                   constraints:
                     nullable: false
               - column:

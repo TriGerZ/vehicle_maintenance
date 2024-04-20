@@ -3,8 +3,8 @@ package com.trigerz.vehicle.maintenance.persistence.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.apache.commons.lang3.builder.EqualsExclude;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@EqualsAndHashCode
 @Table(name = "VEHICLE")
 public class Vehicle {
     @Id
@@ -28,6 +32,7 @@ public class Vehicle {
     private Integer currentKilometers;
 
     @OneToMany
+    @Builder.Default
     private List<Operation> operations = new ArrayList<>();
 
 }
