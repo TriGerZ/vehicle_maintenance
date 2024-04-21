@@ -1,7 +1,7 @@
 package com.trigerz.vehicle.maintenance.rest.configuration;
 
 import com.trigerz.vehicle.maintenance.persistence.repository.VehicleRepository;
-import com.trigerz.vehicle.maintenance.persistence.service.VehicleDaoService;
+import com.trigerz.vehicle.maintenance.persistence.service.VehicleService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    public VehicleDaoService vehicleDaoService(VehicleRepository vehicleRepository){
-        return new VehicleDaoService(vehicleRepository);
+    public VehicleService vehicleDaoService(VehicleRepository vehicleRepository){
+        return new VehicleService(vehicleRepository);
     }
 }

@@ -16,10 +16,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class VehicleDaoServiceTest {
+class VehicleServiceTest {
 
     @InjectMocks
-    private VehicleDaoService vehicleDaoService;
+    private VehicleService vehicleService;
     @Mock
     private VehicleRepository vehicleRepository;
 
@@ -31,7 +31,7 @@ class VehicleDaoServiceTest {
         VehicleDao vehicleDao = new VehicleDao(1, name, currentKilometers, List.of());
         Vehicle vehicle = Vehicle.builder().name(name).currentKilometers(currentKilometers).build();
         //When
-        vehicleDaoService.save(vehicleDao);
+        vehicleService.save(vehicleDao);
         //Then
         verify(vehicleRepository).save(vehicle);
     }
@@ -45,7 +45,7 @@ class VehicleDaoServiceTest {
         Vehicle vehicle2 = Vehicle.builder().id(2).name(name).currentKilometers(currentKilometers).build();
         when(vehicleRepository.findAll()).thenReturn(List.of(vehicle, vehicle2));
         //When
-        var current = vehicleDaoService.getAll();
+        var current = vehicleService.getAll();
         //Then
         assertEquals(2, current.size());
     }

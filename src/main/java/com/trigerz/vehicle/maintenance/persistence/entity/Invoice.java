@@ -1,33 +1,37 @@
 package com.trigerz.vehicle.maintenance.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "OPERATION_HISTORY")
-public class OperationHistory {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "INVOICE")
+public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @Column(name = "DATE")
-    private LocalDate date;
+    @Lob
+    @Column(name = "CONTENT")
+    private String content;
+
+    @Column(name = "PRICE")
+    private Long price;
+
+    @Lob
+    @Column(name = "LINK")
+    private String link;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "OPERATION_ID")
-    private Operation operation;
-
-    @OneToMany(mappedBy = "OPERATION_HISTORY")
-    private List<Invoice> invoices;
+    @JoinColumn(name = "OPERATION_HISTORY_ID")
+    private OperationHistory operationHistory;
 
 }

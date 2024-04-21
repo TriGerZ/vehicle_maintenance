@@ -5,13 +5,13 @@ import com.trigerz.vehicle.maintenance.persistence.entity.Vehicle;
 import com.trigerz.vehicle.maintenance.rest.model.VehicleBasicDto;
 import com.trigerz.vehicle.maintenance.rest.model.VehicleBasicReqDto;
 
-public class VehicleDaoMapper {
+public class VehicleMapper {
     public static VehicleDao map(Vehicle vehicle) {
         return new VehicleDao(
                 vehicle.getId(), vehicle.getName(), vehicle.getCurrentKilometers(),
                 vehicle.getOperations()
                         .stream()
-                        .map(OperationDaoMapper::map)
+                        .map(OperationMapper::map)
                         .toList()
         );
     }

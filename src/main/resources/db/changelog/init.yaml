@@ -21,6 +21,7 @@ databaseChangeLog:
               - column:
                   name: current_kilometers
                   type: int
+
         - createTable:
             tableName:  operation
             columns:
@@ -49,6 +50,14 @@ databaseChangeLog:
               - column:
                   name: vehicle_id
                   type: int
+        - addForeignKeyConstraint:
+            baseColumnNames: vehicle_id
+            baseTableName: operation
+            constraintName: fk_operation_vehicle_id
+            referencedColumnNames: id
+            referencedTableName: vehicle
+            validate: true
+
         - createTable:
             tableName: operation_history
             columns:
@@ -66,16 +75,39 @@ databaseChangeLog:
                   name: operation_id
                   type: int
         - addForeignKeyConstraint:
-            baseColumnNames: vehicle_id
-            baseTableName: operation
-            constraintName: fk_operation_vehicle_id
-            referencedColumnNames: id
-            referencedTableName: vehicle
-            validate: true
-        - addForeignKeyConstraint:
             baseColumnNames: operation_id
             baseTableName: operation_history
             constraintName: fk_operation_history_operation_id
             referencedColumnNames: id
             referencedTableName: operation
+            validate: true
+
+        - createTable:
+            tableName: invoice
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: content
+                  type: varchar
+              - column:
+                  name: price
+                  type: long
+              - column:
+                  name: link
+                  type: varchar
+              - column:
+                  name: operation_history_id
+                  type: int
+        - addForeignKeyConstraint:
+            baseColumnNames: operation_history_id
+            baseTableName: invoice
+            constraintName: fk_invoice_operation_history_id
+            referencedColumnNames: id
+            referencedTableName: operation_history
             validate: true
