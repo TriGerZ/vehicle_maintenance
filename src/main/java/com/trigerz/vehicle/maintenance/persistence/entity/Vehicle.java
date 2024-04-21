@@ -31,6 +31,7 @@ public class Vehicle {
     private Integer currentKilometers;
 
     @OneToMany(mappedBy = "vehicle")
-    private List<Operation> operations;
+    @Builder.Default
+    private List<Operation> operations = new ArrayList<>();
 
 }

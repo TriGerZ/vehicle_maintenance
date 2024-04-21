@@ -1,8 +1,8 @@
 package com.trigerz.vehicle.maintenance.persistence.service;
 
 import com.trigerz.vehicle.maintenance.common.mapper.VehicleDaoMapper;
-import com.trigerz.vehicle.maintenance.persistence.model.VehicleDao;
 import com.trigerz.vehicle.maintenance.persistence.entity.Vehicle;
+import com.trigerz.vehicle.maintenance.persistence.model.VehicleDao;
 import com.trigerz.vehicle.maintenance.persistence.repository.VehicleRepository;
 import jakarta.persistence.EntityNotFoundException;
 
