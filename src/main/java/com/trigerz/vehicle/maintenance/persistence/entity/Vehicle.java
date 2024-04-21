@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.apache.commons.lang3.builder.EqualsExclude;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +30,7 @@ public class Vehicle {
     @Column(name = "CURRENT_KILOMETERS")
     private Integer currentKilometers;
 
-    @OneToMany
-    @Builder.Default
-    private List<Operation> operations = new ArrayList<>();
+    @OneToMany(mappedBy = "vehicle")
+    private List<Operation> operations;
 
 }

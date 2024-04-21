@@ -1,9 +1,8 @@
-package com.trigerz.vehicle.maintenance.dao.service;
+package com.trigerz.vehicle.maintenance.persistence.service;
 
-import com.trigerz.vehicle.maintenance.dao.model.VehicleDao;
 import com.trigerz.vehicle.maintenance.persistence.entity.Vehicle;
+import com.trigerz.vehicle.maintenance.persistence.model.VehicleDao;
 import com.trigerz.vehicle.maintenance.persistence.repository.VehicleRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
