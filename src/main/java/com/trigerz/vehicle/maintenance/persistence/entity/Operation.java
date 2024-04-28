@@ -3,20 +3,17 @@ package com.trigerz.vehicle.maintenance.persistence.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "OPERATION")
 public class Operation {
     @Id
@@ -26,23 +23,21 @@ public class Operation {
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "NAME", nullable = false, length = 50)
-    private String name;
+    @Column(name = "TYPE", nullable = false, length = 50)
+    private String type;
 
-    @NotNull
-    @Column(name = "PERIODICITY_DATE", nullable = false)
-    private LocalDate periodicityDate;
+    @Column(name = "PERIODICITY_MILEAGE")
+    private Integer periodicityMileage;
 
-    @NotNull
-    @Column(name = "PERIODICITY_KILOMETERS", nullable = false)
-    private Integer periodicityKilometers;
+    @Column(name = "PERIODICITY_MONTH")
+    private Integer periodicityMonth;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.RESTRICT)
     @JoinColumn(name = "VEHICLE_ID")
     private Vehicle vehicle;
 
-    @OneToMany
-    private List<OperationHistory> operationHistory = new ArrayList<>();
+    @OneToMany(mappedBy = "operation")
+    private Set<History> histories = new LinkedHashSet<>();
 
 }

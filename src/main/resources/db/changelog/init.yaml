@@ -40,6 +40,8 @@ databaseChangeLog:
               - column:
                   name: current_mileage
                   type: int
+                  constraints:
+                    nullable: false
               - column:
                   name: last_mileage_update
                   type: date
@@ -53,6 +55,7 @@ databaseChangeLog:
                     foreignKeyName: vehicle_owner_id
                     referencedTableName: owner
                     referencedColumnNames: id
+                    nullable: false
         - createTable:
             tableName:  operation
             columns:
@@ -80,6 +83,7 @@ databaseChangeLog:
                     foreignKeyName: operation_vehicle_id
                     referencedTableName: vehicle
                     referencedColumnNames: id
+                    nullable: false
         - createTable:
             tableName: history
             columns:
@@ -92,6 +96,8 @@ databaseChangeLog:
               - column:
                   name: date
                   type: date
+                  constraints:
+                    nullable: false
               - column:
                   name: comment
                   type: varchar
@@ -102,12 +108,18 @@ databaseChangeLog:
                   name: price
                   type: decimal
               - column:
+                  name: mileage
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
                   name: operation_id
                   type: int
                   constraints:
                     foreignKeyName: history_operation_id
                     referencedTableName: operation
                     referencedColumnNames: id
+                    nullable: false
         - createTable:
             tableName: accessory
             columns:
@@ -135,3 +147,4 @@ databaseChangeLog:
                     foreignKeyName: accessory_vehicle_id
                     referencedTableName: vehicle
                     referencedColumnNames: id
+                    nullable: false

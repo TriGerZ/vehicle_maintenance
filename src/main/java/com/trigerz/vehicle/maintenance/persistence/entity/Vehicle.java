@@ -3,18 +3,19 @@ package com.trigerz.vehicle.maintenance.persistence.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@EqualsAndHashCode
 @Table(name = "VEHICLE")
 public class Vehicle {
     @Id
@@ -23,15 +24,35 @@ public class Vehicle {
     private Integer id;
 
     @Size(max = 50)
-    @NotNull
-    @Column(name = "NAME", nullable = false, length = 50)
-    private String name;
+    @Column(name = "BRAND", length = 50)
+    private String brand;
 
-    @Column(name = "CURRENT_KILOMETERS")
-    private Integer currentKilometers;
+    @Size(max = 50)
+    @NotNull
+    @Column(name = "MODEL", nullable = false, length = 50)
+    private String model;
+
+    @Column(name = "PURCHASE_DATE")
+    private LocalDate purchaseDate;
+
+    @Column(name = "CURRENT_MILEAGE")
+    private Integer currentMileage;
+
+    @Column(name = "LAST_MILEAGE_UPDATE")
+    private LocalDate lastMileageUpdate;
+
+    @Column(name = "PRICE")
+    private BigDecimal price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.RESTRICT)
+    @JoinColumn(name = "OWNER_ID")
+    private Owner owner;
 
     @OneToMany(mappedBy = "vehicle")
-    @Builder.Default
-    private List<Operation> operations = new ArrayList<>();
+    private Set<Accessory> accessories = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "vehicle")
+    private Set<Operation> operations = new LinkedHashSet<>();
 
 }
