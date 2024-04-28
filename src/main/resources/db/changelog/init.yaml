@@ -4,6 +4,20 @@ databaseChangeLog:
       author:  franck.mazzolo@gmail.com
       changes:
         - createTable:
+            tableName: owner
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+        - createTable:
             tableName: vehicle
             columns:
               - column:
@@ -12,16 +26,33 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
-                  name: name
+                  name: brand
+                  type: varchar(50)
+              - column:
+                  name: model
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: current_kilometers
+                  name: purchase_date
+                  type: date
+              - column:
+                  name: current_mileage
                   type: int
-
+              - column:
+                  name: last_mileage_update
+                  type: date
+              - column:
+                  name: price
+                  type: decimal
+              - column:
+                  name: owner_id
+                  type: int
+                  constraints:
+                    foreignKeyName: vehicle_owner_id
+                    referencedTableName: owner
+                    referencedColumnNames: id
         - createTable:
             tableName:  operation
             columns:
@@ -31,35 +62,26 @@ databaseChangeLog:
                   autoIncrement:  true
                   constraints:
                     primaryKey:  true
-                    nullable:  false
               - column:
-                  name:  name
+                  name:  type
                   type:  varchar(50)
                   constraints:
                     nullable:  false
               - column:
-                  name: periodicity_date
-                  type: date
-                  constraints:
-                    nullable: false
-              - column:
-                  name: periodicity_kilometers
+                  name: periodicity_mileage
                   type: int
-                  constraints:
-                    nullable: false
+              - column:
+                  name: periodicity_month
+                  type: int
               - column:
                   name: vehicle_id
                   type: int
-        - addForeignKeyConstraint:
-            baseColumnNames: vehicle_id
-            baseTableName: operation
-            constraintName: fk_operation_vehicle_id
-            referencedColumnNames: id
-            referencedTableName: vehicle
-            validate: true
-
+                  constraints:
+                    foreignKeyName: operation_vehicle_id
+                    referencedTableName: vehicle
+                    referencedColumnNames: id
         - createTable:
-            tableName: operation_history
+            tableName: history
             columns:
               - column:
                   name: id
@@ -67,23 +89,27 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
                   name: date
                   type: date
               - column:
+                  name: comment
+                  type: varchar
+              - column:
+                  name: link
+                  type: varchar
+              - column:
+                  name: price
+                  type: decimal
+              - column:
                   name: operation_id
                   type: int
-        - addForeignKeyConstraint:
-            baseColumnNames: operation_id
-            baseTableName: operation_history
-            constraintName: fk_operation_history_operation_id
-            referencedColumnNames: id
-            referencedTableName: operation
-            validate: true
-
+                  constraints:
+                    foreignKeyName: history_operation_id
+                    referencedTableName: operation
+                    referencedColumnNames: id
         - createTable:
-            tableName: invoice
+            tableName: accessory
             columns:
               - column:
                   name: id
@@ -91,23 +117,21 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
                     nullable: false
               - column:
-                  name: content
-                  type: varchar
-              - column:
                   name: price
-                  type: long
+                  type: decimal
               - column:
-                  name: link
-                  type: varchar
+                  name: purchase_date
+                  type: date
               - column:
-                  name: operation_history_id
+                  name: vehicle_id
                   type: int
-        - addForeignKeyConstraint:
-            baseColumnNames: operation_history_id
-            baseTableName: invoice
-            constraintName: fk_invoice_operation_history_id
-            referencedColumnNames: id
-            referencedTableName: operation_history
-            validate: true
+                  constraints:
+                    foreignKeyName: accessory_vehicle_id
+                    referencedTableName: vehicle
+                    referencedColumnNames: id
