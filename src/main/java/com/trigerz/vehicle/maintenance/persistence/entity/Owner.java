@@ -2,14 +2,13 @@ package com.trigerz.vehicle.maintenance.persistence.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-@Getter
 @Setter
+@Getter
 @Entity
 @Table(name = "OWNER")
 public class Owner {

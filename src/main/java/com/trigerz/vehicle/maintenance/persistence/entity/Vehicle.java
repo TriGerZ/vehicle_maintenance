@@ -13,8 +13,8 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-@Getter
 @Setter
+@Getter
 @Entity
 @Table(name = "VEHICLE")
 public class Vehicle {

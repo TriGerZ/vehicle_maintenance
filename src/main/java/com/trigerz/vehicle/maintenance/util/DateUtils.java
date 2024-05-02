@@ -12,7 +12,10 @@ public class DateUtils {
         return LocalDate.now();
     }
 
-    public static Integer differenceInMonthWithToday(LocalDate date){
+    public static Integer differenceInMonthWithToday(LocalDate date) throws UndefinedDateException {
+        if (date == null){
+            throw new UndefinedDateException("date does not exists");
+        }
         return abs(today().getMonthValue() - date.getMonthValue());
     }
 }

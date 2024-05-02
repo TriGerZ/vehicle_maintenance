@@ -1,9 +1,13 @@
 package com.trigerz.vehicle.maintenance.persistence.service;
 
+import com.trigerz.vehicle.maintenance.domain.dao.service.OwnerDaoService;
+import com.trigerz.vehicle.maintenance.domain.mapper.OwnerMapper;
+import com.trigerz.vehicle.maintenance.domain.model.OwnerModel;
 import com.trigerz.vehicle.maintenance.persistence.entity.Owner;
-import com.trigerz.vehicle.maintenance.persistence.model.OwnerModel;
+import com.trigerz.vehicle.maintenance.domain.dao.mapper.JpaOwnerMapper;
 import com.trigerz.vehicle.maintenance.persistence.repository.OwnerRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.trigerz.vehicle.maintenance.domain.dao.service.exception.DaoEntityNotFoundException;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,8 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.argThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -26,48 +29,71 @@ class OwnerDaoServiceTest {
     private OwnerDaoService ownerDaoService;
     @Mock
     private OwnerRepository ownerRepository;
-
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @Test
-    void shouldReturnListOfOwnerModelWhenGetAll() {
-        //Given
-        when(ownerRepository.findAll()).thenReturn(List.of(new Owner(), new Owner(), new Owner()));
-        //when
-        var owners = ownerDaoService.getAll();
-        //Then
-        assertEquals(3, owners.size());
-    }
+    @Mock
+    private OwnerMapper ownerMapper;
+    @Mock
+    private JpaOwnerMapper jpaOwnerMapper;
 
     @Test
-    void shouldReturnOwnerModelGivenIdExistsWhenGetById() {
+    void shouldReturnAllOwnersWhenGetAll() {
         //Given
-        when(ownerRepository.findById(1L)).thenReturn(Optional.of(new Owner()));
+        var ownerArrayList = List.of(new Owner(), new Owner());
+        when(ownerRepository.findAll()).thenReturn(ownerArrayList);
         //When
-        var owner = ownerDaoService.getById(1);
+        var actual = ownerDaoService.getAll();
         //Then
-        assertNotNull(owner);
+        assertEquals(2, actual.size());
     }
 
     @Test
-    void shouldPersistOwnerWhenSave() {
+    void shouldReturnOwnerWhenGetById() {
         //Given
-        String name = "name";
-        OwnerModel ownerModel = new OwnerModel(null, name,null);
+        var owner = new Owner();
+        owner.setId(66);
+        when(ownerRepository.findById(66L)).thenReturn(Optional.of(owner));
+        OwnerModel ownerModel = new OwnerModel();
+        ownerModel.setId(66);
+        when(ownerMapper.toOwnerModel(owner)).thenReturn(ownerModel);
         //When
-        ownerDaoService.save(ownerModel);
+        OwnerModel actual;
+        try {
+            actual = ownerDaoService.getById(owner.getId());
+        } catch (DaoEntityNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         //Then
-        verify(ownerRepository).save(argThat(
-                argument -> argument.getName().equals(name) &&
-                        argument.getVehicles().isEmpty()
-        ));
+        assertEquals(66, actual.getId());
     }
 
     @Test
-    void delete() {
-
+    void shouldReturnExceptionGivenOwnerNotFoundWhenGetById() {
+        //When & Then
+        var actual = assertThrows(DaoEntityNotFoundException.class, () -> ownerDaoService.getById(404L));
+        assertEquals("Owner not found", actual.getMessage());
     }
+
+    @Test
+    void shouldSaveOwnerWhenSave() {
+        //Given
+        var owner = new Owner();
+        OwnerModel daoModel = new OwnerModel();
+        when(jpaOwnerMapper.mapOwnerModel(daoModel)).thenReturn(owner);
+        //When
+        ownerDaoService.save(daoModel);
+        //Then
+        verify(ownerRepository).save(owner);
+    }
+
+    @SneakyThrows
+    @Test
+    void shouldDeleteOwnerWhenDelete() {
+        //Given
+        var owner = new Owner();
+        owner.setId(66);
+        //When
+        ownerDaoService.delete(66);
+        //Then
+        verify(ownerRepository).deleteById(66L);
+    }
+    
 }
