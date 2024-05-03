@@ -5,12 +5,12 @@ import com.trigerz.vehicle.maintenance.domain.dao.service.exception.DaoEntityNot
 
 import java.util.List;
 
-public interface DaoServiceInterface<T> {
-    List<T> getAll();
+public interface DaoService<M> {
+    List<M> getAll();
 
-    T getById(long id) throws DaoEntityNotFoundException;
+    M getById(long id) throws DaoEntityNotFoundException;
 
-    void save(T daoModel);
+    void save(M daoM);
 
     void delete(long id) throws DaoDataIntegrityViolationException;
 }

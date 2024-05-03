@@ -1,16 +1,11 @@
 package com.trigerz.vehicle.maintenance.rest.configuration;
 
-import com.trigerz.vehicle.maintenance.domain.dao.mapper.JpaOwnerMapper;
-import com.trigerz.vehicle.maintenance.domain.dao.mapper.JpaVehicleMapper;
-import com.trigerz.vehicle.maintenance.domain.dao.service.DaoServiceInterface;
-import com.trigerz.vehicle.maintenance.domain.dao.service.OwnerDaoService;
-import com.trigerz.vehicle.maintenance.domain.dao.service.VehicleDaoService;
-import com.trigerz.vehicle.maintenance.domain.mapper.OwnerMapper;
-import com.trigerz.vehicle.maintenance.domain.mapper.VehicleMapper;
-import com.trigerz.vehicle.maintenance.domain.model.OwnerModel;
-import com.trigerz.vehicle.maintenance.persistence.repository.OwnerRepository;
-import com.trigerz.vehicle.maintenance.persistence.repository.VehicleRepository;
-import com.trigerz.vehicle.maintenance.rest.dto.OwnerDtoService;
+import com.trigerz.vehicle.maintenance.domain.dao.mapper.*;
+import com.trigerz.vehicle.maintenance.domain.dao.service.*;
+import com.trigerz.vehicle.maintenance.domain.mapper.*;
+import com.trigerz.vehicle.maintenance.domain.model.*;
+import com.trigerz.vehicle.maintenance.persistence.repository.*;
+import com.trigerz.vehicle.maintenance.rest.dto.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,16 +14,51 @@ public class BeanConfiguration {
 
     @Bean
     public OwnerDaoService ownerDaoService(OwnerRepository ownerRepository, OwnerMapper ownerMapper, JpaOwnerMapper jpaMapper) {
-        return new OwnerDaoService(ownerRepository, ownerMapper, jpaMapper);
+        return new OwnerDaoServiceImpl(ownerRepository, ownerMapper, jpaMapper);
     }
 
     @Bean
     public VehicleDaoService vehicleDaoService(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper, JpaVehicleMapper jpaMapper) {
-        return new VehicleDaoService(vehicleRepository, vehicleMapper, jpaMapper);
+        return new VehicleDaoServiceImpl(vehicleRepository, vehicleMapper, jpaMapper);
     }
 
     @Bean
-    public OwnerDtoService ownerDtoService(DaoServiceInterface<OwnerModel> ownerDaoService, OwnerMapper ownerMapper) {
-        return new OwnerDtoService(ownerDaoService, ownerMapper);
+    public AccessoryDaoService accessoryDaoService(AccessoryRepository accessoryRepository, JpaAccessoryMapper jpaAccessoryMapper, AccessoryMapper accessoryMapper) {
+        return new AccessoryDaoServiceImpl(accessoryRepository, jpaAccessoryMapper, accessoryMapper);
+    }
+
+    @Bean
+    public OperationDaoService operationDaoService(OperationRepository operationRepository, OperationMapper operationMapper, JpaOperationMapper jpaOperationMapper) {
+        return new OperationDaoServiceImpl(operationRepository, operationMapper, jpaOperationMapper);
+    }
+
+    @Bean
+    public OperationHistoryDaoService operationHistoryDaoService(HistoryRepository historyRepository, OperationHistoryMapper operationHistoryMapper, JpaHistoryMapper jpaHistoryMapper){
+        return new OperationHistoryDaoServiceImpl(historyRepository, operationHistoryMapper, jpaHistoryMapper);
+    }
+
+    @Bean
+    public OwnerDtoService ownerDtoService(OwnerDaoService ownerDaoService, OwnerMapper ownerMapper) {
+        return new OwnerDtoServiceImpl(ownerDaoService, ownerMapper);
+    }
+
+    @Bean
+    public VehicleDtoService vehicleDtoService(VehicleDaoService daoService, VehicleMapper vehicleMapper){
+        return new VehicleDtoServiceImpl(daoService, vehicleMapper);
+    }
+
+    @Bean
+    public AccessoryDtoService accessoryDtoService(AccessoryDaoService daoService, AccessoryMapper accessoryMapper){
+        return new AccessoryDtoServiceImpl(daoService, accessoryMapper);
+    }
+
+    @Bean
+    public OperationDtoService operationDtoService(OperationDaoService daoService, OperationMapper operationMapper){
+        return new OperationDtoServiceImpl(daoService, operationMapper);
+    }
+
+    @Bean
+    public OperationHistoryDtoService operationHistoryDtoService(OperationHistoryDaoService daoService, OperationHistoryMapper operationHistoryMapper){
+        return new OperationHistoryDtoServiceImpl(daoService, operationHistoryMapper);
     }
 }

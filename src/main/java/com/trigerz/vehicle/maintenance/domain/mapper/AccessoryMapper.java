@@ -3,6 +3,7 @@ package com.trigerz.vehicle.maintenance.domain.mapper;
 import com.trigerz.vehicle.maintenance.persistence.entity.Accessory;
 import com.trigerz.vehicle.maintenance.domain.model.AccessoryModel;
 import com.trigerz.vehicle.maintenance.rest.dto.model.request.AccessoryReqDto;
+import com.trigerz.vehicle.maintenance.rest.dto.model.response.AccessoryResDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,4 +13,5 @@ public interface AccessoryMapper {
     AccessoryModel toAccessoryModel(Accessory accessory);
     @Mapping(target = "id", ignore = true)
     AccessoryModel toAccessoryModel(AccessoryReqDto accessoryReqDto);
+    AccessoryResDto toAccessoryResDto(AccessoryModel accessoryModel);
 }

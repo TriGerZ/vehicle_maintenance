@@ -3,6 +3,7 @@ package com.trigerz.vehicle.maintenance.domain.mapper;
 import com.trigerz.vehicle.maintenance.persistence.entity.History;
 import com.trigerz.vehicle.maintenance.domain.model.OperationHistoryModel;
 import com.trigerz.vehicle.maintenance.rest.dto.model.request.OperationHistoryReqDto;
+import com.trigerz.vehicle.maintenance.rest.dto.model.response.OperationHistoryResDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,4 +13,5 @@ public interface OperationHistoryMapper {
   OperationHistoryModel toOperationHistoryModel(History history);
   @Mapping(target = "id", ignore = true)
   OperationHistoryModel toOperationHistoryModel(OperationHistoryReqDto operationHistoryReqDto);
+  OperationHistoryResDto toOperationHistoryResDto(OperationHistoryModel operationHistoryModel);
 }

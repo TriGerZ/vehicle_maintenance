@@ -7,6 +7,7 @@ import com.trigerz.vehicle.maintenance.persistence.entity.Vehicle;
 import com.trigerz.vehicle.maintenance.domain.dao.mapper.JpaVehicleMapper;
 import com.trigerz.vehicle.maintenance.persistence.repository.VehicleRepository;
 import com.trigerz.vehicle.maintenance.domain.dao.service.exception.DaoEntityNotFoundException;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,10 +23,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class VehicleDaoServiceTest {
+class VehicleDaoServiceImplTest {
 
     @InjectMocks
-    private VehicleDaoService vehicleDaoService;
+    private VehicleDaoService vehicleDaoServiceImpl;
     @Mock
     private VehicleRepository vehicleRepository;
     @Mock
@@ -39,7 +40,7 @@ class VehicleDaoServiceTest {
         var vehicleArrayList = List.of(new Vehicle(), new Vehicle());
         when(vehicleRepository.findAll()).thenReturn(vehicleArrayList);
         //When
-        var actual = vehicleDaoService.getAll();
+        var actual = vehicleDaoServiceImpl.getAll();
         //Then
         assertEquals(2, actual.size());
     }
@@ -56,7 +57,7 @@ class VehicleDaoServiceTest {
         //When
         VehicleModel actual;
         try {
-            actual = vehicleDaoService.getById(vehicle.getId());
+            actual = vehicleDaoServiceImpl.getById(vehicle.getId());
         } catch (DaoEntityNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -67,7 +68,7 @@ class VehicleDaoServiceTest {
     @Test
     void shouldReturnExceptionGivenVehicleNotFoundWhenGetById() {
         //When & Then
-        var actual = assertThrows(DaoEntityNotFoundException.class, () -> vehicleDaoService.getById(404L));
+        var actual = assertThrows(DaoEntityNotFoundException.class, () -> vehicleDaoServiceImpl.getById(404L));
         assertEquals("Vehicle not found", actual.getMessage());
     }
 
@@ -78,18 +79,19 @@ class VehicleDaoServiceTest {
         VehicleModel daoModel = new VehicleModel();
         when(jpaVehicleMapper.mapVehicleModel(daoModel)).thenReturn(vehicle);
         //When
-        vehicleDaoService.save(daoModel);
+        vehicleDaoServiceImpl.save(daoModel);
         //Then
         verify(vehicleRepository).save(vehicle);
     }
 
+    @SneakyThrows
     @Test
     void shouldDeleteVehicleWhenDelete() {
         //Given
         var vehicle = new Vehicle();
         vehicle.setId(66);
         //When
-        vehicleDaoService.delete(66);
+        vehicleDaoServiceImpl.delete(66);
         //Then
         verify(vehicleRepository).deleteById(66L);
     }
