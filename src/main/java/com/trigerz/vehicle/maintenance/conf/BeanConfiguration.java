@@ -1,11 +1,12 @@
-package com.trigerz.vehicle.maintenance.rest.configuration;
+package com.trigerz.vehicle.maintenance.conf;
 
 import com.trigerz.vehicle.maintenance.domain.dao.mapper.*;
 import com.trigerz.vehicle.maintenance.domain.dao.service.*;
 import com.trigerz.vehicle.maintenance.domain.mapper.*;
-import com.trigerz.vehicle.maintenance.domain.model.*;
 import com.trigerz.vehicle.maintenance.persistence.repository.*;
 import com.trigerz.vehicle.maintenance.rest.dto.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

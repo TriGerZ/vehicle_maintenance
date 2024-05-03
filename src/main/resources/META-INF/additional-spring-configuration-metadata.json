@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "app.google-client-secret",
+      "type": "java.lang.String",
+      "description": "Description for app.google.secret."
+    },
+    {
+      "name": "app.google-client-id",
+      "type": "java.lang.String",
+      "description": "Description for app.google.clientId."
+    },
+    {
+      "name": "app.google-api-key",
+      "type": "java.lang.String",
+      "description": "Description for app.google-api-key."
+    }
+  ]
+}

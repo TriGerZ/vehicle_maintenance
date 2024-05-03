@@ -1,12 +1,12 @@
 package com.trigerz.vehicle.maintenance.persistence.service;
 
+import com.trigerz.vehicle.maintenance.domain.dao.mapper.JpaOwnerMapper;
 import com.trigerz.vehicle.maintenance.domain.dao.service.OwnerDaoService;
+import com.trigerz.vehicle.maintenance.domain.dao.service.exception.DaoEntityNotFoundException;
 import com.trigerz.vehicle.maintenance.domain.mapper.OwnerMapper;
 import com.trigerz.vehicle.maintenance.domain.model.OwnerModel;
 import com.trigerz.vehicle.maintenance.persistence.entity.Owner;
-import com.trigerz.vehicle.maintenance.domain.dao.mapper.JpaOwnerMapper;
 import com.trigerz.vehicle.maintenance.persistence.repository.OwnerRepository;
-import com.trigerz.vehicle.maintenance.domain.dao.service.exception.DaoEntityNotFoundException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
